@@ -1,6 +1,9 @@
 import json
-from flask import Flask,render_template,request,redirect,flash,url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 
+
+class EmailNotFound(Exception):
+    pass
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -20,13 +23,34 @@ app.secret_key = 'something_special'
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+
+def get_club(email: str) -> dict:
+    """Return the first club matching the email"""
+    for club in clubs:
+        if email == club.get('email'):
+            return club
+    raise EmailNotFound
+
+
+
+# Hello, World!
+@app.route('/hello')
+def hello():
+    return "Hello, World!"
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/showSummary',methods=['POST'])
-def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
+def show_summary():    
+    try:
+        club = get_club(request.form['email'])
+    except EmailNotFound:        
+        flash(f"L' email {request.form['email']} n'existe pas! Veuillez rééssayer.")        
+        return redirect(url_for('index'))
+
+    # club = [club for club in clubs if club['email'] == request.form['email']][0]        
     return render_template('welcome.html',club=club,competitions=competitions)
 
 
