@@ -14,8 +14,7 @@ Le problème est souvent que beaucoup pensent en faire, alors qu'il font en fait
 Par exemple, il est pratiquement impossible en Flask de faire un test unitaire de vue. On obtient automatiquement
 un test d'intégration dès qu'ont passe par le client de test. Flask ne permet pas en effet de se passer du client de test,
 tandis que django oui. Maintenant, ce ne sont que des labels et dans une certaine mesure, ce n'est pas important.
-De toute manière, dans la vrai vie, une vue ne devrait contenir que très peu de logique Il y a forcément cette zone grise
-lorsqu'on travaille avec un framework web entre test unitaire et test d'intégration.
+De toute manière, dans la vrai vie, une vue ne devrait contenir que très peu de logique Il y a forcément cette zone grise lorsqu'on travaille avec un framework web entre test unitaire et test d'intégration.
 
 ***************************************************************************************************************
 Diff unit test, integration test Aurélien Masse
