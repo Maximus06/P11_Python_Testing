@@ -23,7 +23,7 @@ def runner(app):
 
 @pytest.fixture
 def clubs():
-    return {"clubs":[
+    return [
         {
             "name": "Simply Lift",
             "email": "john@simplylift.co",
@@ -38,4 +38,4 @@ def clubs():
             "email": "kate@shelifts.co.uk",
             "points": "12"
         }
-    ]}
+    ]

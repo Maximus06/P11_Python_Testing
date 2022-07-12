@@ -9,6 +9,11 @@ https://testdriven.io/blog/flask-pytest/
 Pytest sur Realpython
 https://realpython.com/pytest-python-testing/
 
+Http status:
+https://developer.mozilla.org/fr/docs/Web/HTTP/Status
+
+*********************************************************************************************************
+
 Thierry sur unit et integration sous flask:
 Le problème est souvent que beaucoup pensent en faire, alors qu'il font en fait des tests d'intégration.
 Par exemple, il est pratiquement impossible en Flask de faire un test unitaire de vue. On obtient automatiquement

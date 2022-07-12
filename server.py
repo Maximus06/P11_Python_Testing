@@ -1,4 +1,5 @@
 import json
+from typing import Union
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -15,6 +16,15 @@ def loadCompetitions():
     with open('competitions.json') as comps:
          listOfCompetitions = json.load(comps)['competitions']
          return listOfCompetitions
+
+
+def get_club_by_name(clubs: list, club_name: str) -> Union[dict, None]:
+    """Return the first club matching the name or None"""
+    for club in clubs:
+        if club.get('name') == club_name:
+            print(club)
+            return club
+    return None
 
 
 app = Flask(__name__)
@@ -43,10 +53,10 @@ def index():
     return render_template('index.html')
 
 @app.route('/showSummary',methods=['POST'])
-def show_summary():    
+def show_summary():
     try:
         club = get_club(request.form['email'])
-    except EmailNotFound:        
+    except EmailNotFound:
         flash(f"L' email {request.form['email']} n'existe pas! Veuillez rééssayer.")        
         return redirect(url_for('index'))
 
@@ -71,6 +81,10 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+
+    # update the club points
+    club['points'] = int(club['points']) - placesRequired
+
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
