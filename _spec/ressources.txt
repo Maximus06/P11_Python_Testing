@@ -35,3 +35,16 @@ Pour tester unitairement une telle fonction on peut simuler la reussite de la pa
 De meme si je mocke le resultat de ma fonction B dans ma fonction A (troisieme exemple) meme si ma fonction B n'est pas fonctionnelle, le test passera car la focntion A est correctement codée et independante de la fonction B (puisque sa reussite est simulee par le mock)
 
 ************************************************************************************************************************
+
+locust:
+
+ATTENTION: requete sur localhost bien plus lente que sur 127.0.0.1 (DNS ?)
+
+ligne de commande :
+locust --headless --users 10 --spawn-rate 1 -H http://127.0.0.1:5000/
+
+server!
+locust
+
+lancer http://localhost:8089/
+
