@@ -11,7 +11,7 @@ from server import EmailNotFound, show_summary, get_club
 
 def test_hello(client):
     response = client.get('/hello')
-    assert response.data == b'Hello, World!'    
+    assert response.data == b'Hello, World!'
 
 def test_get_club_with_email_existing():
     """

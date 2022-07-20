@@ -2,11 +2,7 @@
 
 from typing import Union
 
-from tests.conftest import client
-
 from server import purchasePlaces, clubs, get_club_by_name
-
-
 
 
 def test_update_point(client):

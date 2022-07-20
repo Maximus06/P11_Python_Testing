@@ -13,6 +13,9 @@ Http status:
 https://developer.mozilla.org/fr/docs/Web/HTTP/Status
 
 *********************************************************************************************************
+exemple du cours sur github:
+https://github.com/OpenClassrooms-Student-Center/4425126-testing-python-flask/tree/pytest-test/tests
+*********************************************************************************************************
 
 Thierry sur unit et integration sous flask:
 Le problème est souvent que beaucoup pensent en faire, alors qu'il font en fait des tests d'intégration.
