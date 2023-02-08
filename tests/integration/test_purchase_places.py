@@ -5,7 +5,7 @@ from typing import Union
 from server import purchasePlaces, clubs, get_club_by_name
 
 
-def test_update_point(client):
+def test_update_point_with_enought_point(client):
     """
     GIVEN a number of points avaible for a club
     WHEN the purchasePlaces function is called

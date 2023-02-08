@@ -56,3 +56,20 @@ locust
 
 lancer http://localhost:8089/
 
+***********************************************************************************************************
+Coverage
+
+fichier coveragerc:
+# Pour omettre le dossier des tests dans le coverage
+[run]
+omit = tests/*
+
+avec coverage :
+coverage run -m pytest -v tests
+coverage report
+
+avec pytest-cov :
+pytest --cov=.  -v tests
+Ou en générant un rapport html:
+pytest --cov=. --cov-report html (générera un dossier htmlcov)
+

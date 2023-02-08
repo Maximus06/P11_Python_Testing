@@ -1,13 +1,12 @@
 """Test the data loading functions"""
 
-from tests.conftest import clubs
-from server import loadClubs, loadCompetitions, get_club_by_name
+from server import loadClubs, loadCompetitions, get_club_by_name, get_competition_by_name
 
 def test_load_clubs_is_ok():
     """
-    GIVEN a clubs.json file exists in the current directory
+    GIVEN a clubs.json file existing in the current directory with known data
     WHEN loadClubs function is called
-    THEN a list of 3 clubs is returned and the first club == to Simply Lift
+    THEN a list of 3 clubs is returned and the first club is "Simply Lift"
     """
     clubs = loadClubs()
     assert len(clubs) == 3
@@ -16,9 +15,9 @@ def test_load_clubs_is_ok():
 
 def test_load_competition_is_ok():
     """
-    GIVEN a competitions.json file exists in the current directory
+    GIVEN a competitions.json file with known data existing in the current directory
     WHEN loadCompetitions function is called
-    THEN a list of 2 competitions is returned with the first competition == to Simply Lift
+    THEN a list of 2 competitions is returned with the first competition == "Spring Festival"
     """
     competitions = loadCompetitions()
     assert len(competitions) == 2
@@ -31,9 +30,14 @@ def test_get_club_by_name_return_a_club(clubs):
     WHEN get_club_by_name function is called
     THEN the dictionnary of the club is returned
     """
-    club = get_club_by_name(clubs, "Iron Temple")
-    assert club.get('email') == "admin@irontemple.com"
-    assert club.get('points') == "4"
+    club_name = "Iron Temple"
+    expected_email = "admin@irontemple.com"
+    expected_point = "4"
+
+    club = get_club_by_name(clubs, club_name)
+
+    assert club.get('email') == expected_email
+    assert club.get('points') == expected_point
 
 def test_get_club_by_name_return_none(clubs):
     """
@@ -43,3 +47,30 @@ def test_get_club_by_name_return_none(clubs):
     """
     club = get_club_by_name(clubs, "Bad club")
     assert club is None
+
+def test_get_competition_by_name_return_a_competition(competitions):
+    """
+    GIVEN a arnold classic name existing in competition
+    WHEN get_competition_by_name function is called
+    THEN the dictionnary of the competition is returned
+    """
+    expected_name = "Arnold Classic"
+    expected_place = "15"
+
+    competition = get_competition_by_name(competitions, expected_name)
+
+    assert competition.get('name') == expected_name
+    assert competition.get('numberOfPlaces') == expected_place
+
+def test_get_competition_by_name_return_none(competitions):
+    """
+    GIVEN a competition name not existing in competitions
+    WHEN get_competition_by_name function is called
+    THEN None is returned
+    """
+    expected_name = "Bad name"
+
+    competition = get_competition_by_name(competitions, expected_name)
+
+    assert competition is None
+    

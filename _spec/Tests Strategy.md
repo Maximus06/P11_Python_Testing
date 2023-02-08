@@ -16,11 +16,11 @@ reports against it
 ### Then for each feature, we are going to list test cases using these criteria:
 
 - Start with a non-trivial, happy path test case.
-- Then look at test cases that represent
+- Then look at test cases that represent:
     - interesting sets of input,
     - interesting starting states,
     - interesting end states, or
     - all possible error states.
 
 ## Features:
-- 
+- purchase place
