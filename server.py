@@ -34,12 +34,19 @@ def get_competition_by_name(competitions: list, competition_name: str) -> dict |
             return compet
     return None
 
+def update_club_points(club_point: str, point_to_substract: int) -> int:
+    """Return the updated point of a club after booking"""
+    try:
+        updated_point =  int(club_point) - point_to_substract
+    except ValueError:
+        error_msg = f"Une erreur est survenue dans la fonction update_club_points car les points des clubs ne sont pas des entiers"
+        raise ValueError(error_msg)
+    
+    if updated_point < 0:
+        updated_point = 0
 
-app = Flask(__name__)
-app.secret_key = 'something_special'
+    return updated_point
 
-competitions = loadCompetitions()
-clubs = loadClubs()
 
 def get_club(email: str) -> dict:
     """Return the first club matching the email"""
@@ -47,6 +54,13 @@ def get_club(email: str) -> dict:
         if email == club.get('email'):
             return club
     raise EmailNotFound
+
+
+app = Flask(__name__)
+app.secret_key = 'something_special'
+
+competitions = loadCompetitions()
+clubs = loadClubs()
 
 
 @app.route('/')
@@ -72,10 +86,10 @@ def show_summary():
 def book(competition,club):
     """Render the booking page"""
     # foundClub = [c for c in clubs if c['name'] == club][0]
-    found_club = get_club_by_name(club_name=club)
+    found_club = get_club_by_name(clubs, club_name=club)
 
     # foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    found_competition = get_competition_by_name(competition_name=competition)
+    found_competition = get_competition_by_name(competitions, competition_name=competition)
 
     if found_club and found_competition:
         return render_template('booking.html',club=found_club,competition=found_competition)
@@ -94,14 +108,16 @@ def purchasePlaces():
     # club = [c for c in clubs if c['name'] == request.form['club']][0]
     club = get_club_by_name(clubs, request.form['club'])
 
-    # Récupére les places 
     placesRequired = int(request.form['places'])
+
+    # valid max booking < 12 and club point > place required and competion date < date today
 
     # Mise à jour des places restantes pour la compétition
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
 
     # update the club points
-    club['points'] = int(club['points']) - placesRequired
+    club['points'] = update_club_points(int(club['points']), placesRequired) 
+    # club['points'] = int(club['points']) - placesRequired
 
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)

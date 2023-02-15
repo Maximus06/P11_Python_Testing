@@ -65,4 +65,12 @@ def test_show_summary_ok(client, monkeypatch, competitions):
 
     assert response.status_code == HTTPStatus.OK
     assert data.find("<h2>Welcome, admin@irontemple.com </h2>") != -1
-       
+
+def test_not_allowed_with_get(client):
+    """
+    GET method is not allowed
+    """
+
+    response = client.get("/showSummary")
+
+    assert response.status_code == HTTPStatus.METHOD_NOT_ALLOWED
