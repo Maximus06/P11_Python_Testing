@@ -49,7 +49,7 @@ locust:
 ATTENTION: requete sur localhost bien plus lente que sur 127.0.0.1 (DNS ?)
 
 ligne de commande :
-locust --headless --users 10 --spawn-rate 1 -H http://127.0.0.1:5000/
+locust --headless --users 6 --spawn-rate 1 -H http://127.0.0.1:5000/
 
 server!
 locust

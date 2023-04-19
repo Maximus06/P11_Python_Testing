@@ -7,8 +7,16 @@ def test_load_clubs_is_ok():
     GIVEN a clubs.json file existing in the current directory with known data
     WHEN loadClubs function is called
     THEN a list of 3 clubs is returned and the first club is "Simply Lift"
+
+    AAA
+    Arrange
+    ACT
+    Assert
     """
+    name_expected = "Simply Lift"
+
     clubs = loadClubs()
+
     assert len(clubs) == 3
     assert clubs[0].get('name') == "Simply Lift"
     

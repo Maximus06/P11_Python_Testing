@@ -1,11 +1,23 @@
 import json
 
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, jsonify, make_response
 
 # Maximum booking place allowed
 MAX_BOOKING = 12
 
 class EmailNotFound(Exception):
+    pass
+
+class MaxBookingLimitError(Exception):
+    pass
+
+class NotEnoughtPoint(Exception):
+    pass
+
+class NotEnoughtPendingPlace(Exception):
+    pass
+
+class ExpiredCompetition(Exception):
     pass
 
 def loadClubs():
@@ -55,6 +67,22 @@ def get_club(email: str) -> dict:
             return club
     raise EmailNotFound
 
+def valid_booking(place_required: int, club_place: int, pending_place: int):
+    """Check if a booking is valid or raise the Exception"""
+    
+    if not isinstance(place_required, int) or place_required <= 0:
+        raise ValueError
+
+    if place_required > MAX_BOOKING:        
+        raise MaxBookingLimitError(f"You cannot book more than {MAX_BOOKING}")
+    
+    if club_place < place_required:
+        raise NotEnoughtPoint
+
+    if pending_place < place_required:
+        raise NotEnoughtPendingPlace
+
+    return True
 
 app = Flask(__name__)
 app.secret_key = 'something_special'
@@ -62,6 +90,12 @@ app.secret_key = 'something_special'
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+
+@app.route('/test')
+def test():
+    # return jsonify({"files": ['file1', 'file2']})
+    return make_response(json.dumps({"files": ['file1', 'file2']}), 200)
+    
 
 @app.route('/')
 def index():
@@ -91,11 +125,15 @@ def book(competition,club):
     # foundCompetition = [c for c in competitions if c['name'] == competition][0]
     found_competition = get_competition_by_name(competitions, competition_name=competition)
 
+    club_point = int(found_club.get('points'))    
+    if club_point > MAX_BOOKING:
+         club_point = MAX_BOOKING
+
     if found_club and found_competition:
-        return render_template('booking.html',club=found_club,competition=found_competition)
+        return render_template('booking.html',club=found_club,competition=found_competition, limit=club_point)
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions,)
 
 
 @app.route('/purchasePlaces',methods=['POST'])
@@ -108,9 +146,30 @@ def purchasePlaces():
     # club = [c for c in clubs if c['name'] == request.form['club']][0]
     club = get_club_by_name(clubs, request.form['club'])
 
-    placesRequired = int(request.form['places'])
-
     # valid max booking < 12 and club point > place required and competion date < date today
+    try:
+        valid_booking(
+            place_required=request.form['places'],
+            club_place=int(club.get('points')),
+            pending_place=int(competition.get('numberOfPlaces'))
+        )
+    except ValueError:
+        flash(f"You have to enter a positive number.")
+        return render_template('booking.html',club=club,competition=competition)
+    
+    except MaxBookingLimitError:
+        flash(f"You cannot purchase more than {MAX_BOOKING}.")
+        return render_template('booking.html',club=club,competition=competition)
+    
+    except NotEnoughtPoint:
+        flash(f"You do not have enought point to book {placesRequired} places. You can only book {club.get('points')}")
+        return render_template('booking.html',club=club,competition=competition)
+    
+    except NotEnoughtPendingPlace:
+        flash(f"There is not enought availaible place for this competition")
+        return render_template('booking.html',club=club,competition=competition)
+
+    placesRequired = int(request.form['places'])
 
     # Mise à jour des places restantes pour la compétition
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired

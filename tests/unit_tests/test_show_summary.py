@@ -58,6 +58,7 @@ def test_show_summary_ok(client, monkeypatch, competitions):
         }
 
     monkeypatch.setattr(server, "get_club", patch_get_club)
+    
     monkeypatch.setattr(server, "competitions", competitions)
     
     response = client.post('/showSummary', data={'email' : "admin@irontemple.com"})

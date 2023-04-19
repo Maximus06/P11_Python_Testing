@@ -52,7 +52,7 @@ def competitions():
         },
         {
             "name": "Arnold Classic",
-            "date": "2023-04-04 13:00:00",
+            "date": "2024-04-04 13:00:00",
             "numberOfPlaces": "15"
         }
     ]

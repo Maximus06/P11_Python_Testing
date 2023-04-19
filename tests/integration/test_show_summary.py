@@ -23,11 +23,12 @@ def test_show_summary_with_email_not_existing(client):
     WHEN the show_summary page is called
     THEN the summary page is display with a error message"""
     
+    bademail = "bademail@irontemple.com"
     response = client.post('/showSummary', data={'email' : "bademail@irontemple.com"}, follow_redirects=True)
     
     data = response.data.decode()
 
-    expected_error = "Error: email bademail@irontemple.com does not exist. Please try again."
+    expected_error = f"Error: email {bademail} does not exist. Please try again."
     # assert response.status_code == HTTPStatus.OK
     # assert data.find("Error") != -1
     assert expected_error in data
