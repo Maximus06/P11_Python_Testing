@@ -82,6 +82,7 @@ def get_club(email: str) -> dict:
     for club in clubs:
         if email == club.get("email"):
             return club
+
     raise EmailNotFound
 
 
@@ -123,7 +124,7 @@ def index():
 
 @app.route("/showSummary", methods=["POST"])
 def show_summary():
-    """Render the available competitions"""
+    """Render the available competitions."""
 
     # club = [club for club in clubs if club['email'] == request.form['email']][0]
 
