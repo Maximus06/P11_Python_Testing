@@ -1,6 +1,12 @@
 """Test the data loading functions"""
 
-from server import loadClubs, loadCompetitions, get_club_by_name, get_competition_by_name
+from server import (
+    loadClubs,
+    loadCompetitions,
+    get_club_by_name,
+    get_competition_by_name,
+)
+
 
 def test_load_clubs_is_ok():
     """
@@ -18,8 +24,8 @@ def test_load_clubs_is_ok():
     clubs = loadClubs()
 
     assert len(clubs) == 3
-    assert clubs[0].get('name') == "Simply Lift"
-    
+    assert clubs[0].get("name") == name_expected
+
 
 def test_load_competition_is_ok():
     """
@@ -29,7 +35,7 @@ def test_load_competition_is_ok():
     """
     competitions = loadCompetitions()
     assert len(competitions) == 2
-    assert competitions[0].get('name') == "Spring Festival"
+    assert competitions[0].get("name") == "Spring Festival"
 
 
 def test_get_club_by_name_return_a_club(clubs):
@@ -44,8 +50,9 @@ def test_get_club_by_name_return_a_club(clubs):
 
     club = get_club_by_name(clubs, club_name)
 
-    assert club.get('email') == expected_email
-    assert club.get('points') == expected_point
+    assert club.get("email") == expected_email
+    assert club.get("points") == expected_point
+
 
 def test_get_club_by_name_return_none(clubs):
     """
@@ -55,6 +62,7 @@ def test_get_club_by_name_return_none(clubs):
     """
     club = get_club_by_name(clubs, "Bad club")
     assert club is None
+
 
 def test_get_competition_by_name_return_a_competition(competitions):
     """
@@ -67,8 +75,9 @@ def test_get_competition_by_name_return_a_competition(competitions):
 
     competition = get_competition_by_name(competitions, expected_name)
 
-    assert competition.get('name') == expected_name
-    assert competition.get('numberOfPlaces') == expected_place
+    assert competition.get("name") == expected_name
+    assert competition.get("numberOfPlaces") == expected_place
+
 
 def test_get_competition_by_name_return_none(competitions):
     """
@@ -81,4 +90,3 @@ def test_get_competition_by_name_return_none(competitions):
     competition = get_competition_by_name(competitions, expected_name)
 
     assert competition is None
-    
