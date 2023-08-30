@@ -43,20 +43,27 @@ def test_get_club_with_email_not_existing():
         get_club("bademail@gmail.com")
 
 
-def test_show_summary_ok(client, monkeypatch, competitions):
+def test_show_summary_ok(client, monkeypatch, mocker, competitions):
     """
     GIVEN a email that exists
     WHEN the show_summary page is called
     THEN the summary page is display
     """
 
-    def patch_get_club(email):
+    # avec monkeypatch
+    def patch_get_club(dummy):
         """Mock the get_club function"""
         return {"name": "Iron Temple", "email": "admin@irontemple.com", "points": "4"}
 
     monkeypatch.setattr(server, "get_club", patch_get_club)
 
+    # avec mocker
+    # club = {"name": "Iron Temple", "email": "admin@irontemple.com", "points": "4"}
+    # mocker.patch("server.get_club", return_value=club)
+
     monkeypatch.setattr(server, "competitions", competitions)
+    # avec mocker
+    # mocker.patch.object(server, "competitions", competitions)
 
     response = client.post("/showSummary", data={"email": "admin@irontemple.com"})
     data = response.data.decode()

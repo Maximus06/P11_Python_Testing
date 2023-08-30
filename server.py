@@ -111,10 +111,10 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 
-@app.route("/test")
-def test():
-    # return jsonify({"files": ['file1', 'file2']})
-    return make_response(json.dumps({"files": ["file1", "file2"]}), 200)
+# @app.route("/test")
+# def test():
+#     # return jsonify({"files": ['file1', 'file2']})
+#     return make_response(json.dumps({"files": ["file1", "file2"]}), 200)
 
 
 @app.route("/")
