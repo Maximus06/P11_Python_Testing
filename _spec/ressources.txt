@@ -75,3 +75,5 @@ pytest --cov=.  -v tests
 Ou en générant un rapport html:
 pytest --cov=. --cov-report html (générera un dossier htmlcov)
 
+Fail under 80
+pytest --cov=. --cov-fail-under=80
