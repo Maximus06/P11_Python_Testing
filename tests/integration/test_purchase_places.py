@@ -13,6 +13,7 @@ def test_update_point_with_enought_point(client):
     """
     competition_name = "Spring Festival"
     club_name = "Iron Temple"
+    club_point_expected = 0
 
     response = client.post(
         "/purchasePlaces",
@@ -24,5 +25,5 @@ def test_update_point_with_enought_point(client):
     )
 
     club = get_club_by_name(clubs, club_name)
-    club_point_expected = 0
+
     assert int(club.get("points")) == club_point_expected

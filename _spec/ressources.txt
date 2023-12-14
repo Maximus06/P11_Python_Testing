@@ -59,7 +59,7 @@ lancer http://localhost:8089/
 ***********************************************************************************************************
 Coverage
 
-fichier coveragerc:
+fichier .coveragerc:
 # Pour omettre le dossier des tests dans le coverage
 [run]
 omit = 
@@ -74,6 +74,15 @@ avec pytest-cov :
 pytest --cov=.  -v tests
 Ou en générant un rapport html:
 pytest --cov=. --cov-report html (générera un dossier htmlcov)
+
+exemple de fichier .coveragerc pour exclure les dossiers ou fichier
+[run]
+omit =
+    */migrations/*
+    */tests/*
+    */favoris/*
+    ./services/*
+    manage.py
 
 Fail under 80
 pytest --cov=. --cov-fail-under=80
