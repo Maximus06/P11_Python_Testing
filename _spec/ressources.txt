@@ -86,3 +86,33 @@ omit =
 
 Fail under 80
 pytest --cov=. --cov-fail-under=80
+
+******************************************************************************
+EXEMPLE DE TESTS
+Bien que chaque élève ait la liberté de tester une variété de parcours de test triste et heureux, nous recommandons de tester certains des éléments de base du projet :
+
+TEST UNITAIRES  (fonctions dans le fichier server.py) : 
+
+- loadClubs
+- loadCompetitions
+
+- index
+
+-showSummary :
+    Un test pour s'assurer qu'il affiche un résumé à l'utilisateur lorsqu'un courriel correct est saisi.
+    Un test pour s'assurer qu'un message d'erreur est affiché lorsqu'un utilisateur saisit un courriel incorrect.
+
+- book :
+    Un test pour s'assurer qu'il affiche une page booking.html pour un club ou une compétition valide.
+    Un test pour s'assurer que l'interface utilisateur empêche la réservation d'un club ou d'une compétition non valide.
+
+- purchasePlaces
+    * Un test pour s'assurer que lorsque l'utilisateur achète avec succès, les places sont correctement déduites du concours et les points déduits d'un club.
+    * Un test pour s'assurer qu'il affiche le message d'erreur souhaité lorsqu'il y a plus de 12 places.
+    * Un test pour s'assurer qu'il affiche le message d'erreur souhaité lorsque l'utilisateur s'engage à acheter plus de places que les points disponibles.
+
+- logout
+
+TEST INTEGRATION (fichier server.py) :
+
+- Un test qui exécute successivement les fonctions “loadClubs, loadCompetitions, index, showSummary, book, purchasePlaces, logout.”
