@@ -3,7 +3,7 @@ import pytest
 
 # from tests.conftest import client
 
-from server import EmailNotFound, show_summary, get_club
+from server import EmailNotFound, get_club
 import server
 
 

@@ -7,8 +7,6 @@ from flask import (
     redirect,
     flash,
     url_for,
-    jsonify,
-    make_response,
 )
 
 # Maximum booking place allowed
@@ -68,7 +66,7 @@ def update_club_points(club_point: str, point_to_substract: int) -> int:
     try:
         updated_point = int(club_point) - point_to_substract
     except ValueError:
-        error_msg = f"Une erreur est survenue dans la fonction update_club_points car les points des clubs ne sont pas des entiers"
+        error_msg = "Une erreur est survenue dans la fonction update_club_points car les points des clubs ne sont pas des entiers"
         raise ValueError(error_msg)
 
     if updated_point < 0:
@@ -87,7 +85,7 @@ def get_club(email: str) -> dict:
 
 
 def valid_booking(place_required: int, club_place: int, pending_place: int):
-    """Check if a booking is valid or raise the Exception"""
+    """Check if a booking is valid or raise the matching Exception"""
 
     if not isinstance(place_required, int) or place_required <= 0:
         raise ValueError
@@ -185,7 +183,7 @@ def purchasePlaces():
             pending_place=int(competition.get("numberOfPlaces")),
         )
     except ValueError:
-        flash(f"You have to enter a positive number.")
+        flash("You have to enter a positive number.")
         return render_template("booking.html", club=club, competition=competition)
 
     except MaxBookingLimitError:
@@ -194,12 +192,12 @@ def purchasePlaces():
 
     except NotEnoughtPoint:
         flash(
-            f"You do not have enought point to book {placesRequired} places. You can only book {club.get('points')}"
+            f"You do not have enought point to book {request.form["places"]} places. You can only book {club.get('points')}"
         )
         return render_template("booking.html", club=club, competition=competition)
 
     except NotEnoughtPendingPlace:
-        flash(f"There is not enought availaible place for this competition")
+        flash("There is not enought availaible place for this competition")
         return render_template("booking.html", club=club, competition=competition)
 
     placesRequired = int(request.form["places"])

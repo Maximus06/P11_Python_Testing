@@ -5,6 +5,7 @@ lib
 .envrc
 __pycache__
 .venv
+.venv12
 .vscode
 .idea
 htmlcov

@@ -1,15 +1,16 @@
 from locust import HttpUser, task, between
 
+
 class GoodLift(HttpUser):
     wait_time = between(1, 5)
 
     @task
-    def index(self):        
+    def index(self):
         self.client.get("/")
 
     @task
     def show_summary(self):
-        self.client.post("/showSummary", data={'email': 'admin@irontemple.com'})
+        self.client.post("/showSummary", data={"email": "admin@irontemple.com"})
 
     @task
     def book(self):
@@ -17,11 +18,15 @@ class GoodLift(HttpUser):
 
     @task
     def purchase_place(self):
-        self.client.post("/purchasePlaces", data={'competition': 'Spring Festival', 'club': 'Iron Temple', 'places': '4' })
+        self.client.post(
+            "/purchasePlaces",
+            data={
+                "competition": "Spring Festival",
+                "club": "Iron Temple",
+                "places": "4",
+            },
+        )
 
     @task
-    def logout(self):        
+    def logout(self):
         self.client.get("/logout")
- 
-
-        
