@@ -7,7 +7,6 @@ from flask import (
     redirect,
     flash,
     url_for,
-    jsonify,
     make_response,
 )
 
@@ -68,7 +67,7 @@ def update_club_points(club_point: str, point_to_substract: int) -> int:
     try:
         updated_point = int(club_point) - point_to_substract
     except ValueError:
-        error_msg = f"Une erreur est survenue dans la fonction update_club_points car les points des clubs ne sont pas des entiers"
+        error_msg = "Une erreur est survenue dans la fonction update_club_points car les points des clubs ne sont pas des entiers"
         raise ValueError(error_msg)
 
     if updated_point < 0:
@@ -178,13 +177,14 @@ def purchasePlaces():
 
     # valid max booking < 12 and club point > place required and competion date < date today
     try:
+        place_required = int(request.form["places"])
         valid_booking(
-            place_required=int(request.form["places"]),
+            place_required,
             club_place=int(club.get("points")),
             pending_place=int(competition.get("numberOfPlaces")),
         )
     except ValueError:
-        flash(f"You have to enter a positive number.")
+        flash("You have to enter a positive number.")
         return render_template("booking.html", club=club, competition=competition)
 
     except MaxBookingLimitError:
@@ -193,12 +193,12 @@ def purchasePlaces():
 
     except NotEnoughtPoint:
         flash(
-            f"You do not have enought point to book {placesRequired} places. You can only book {club.get('points')}"
+            f"You do not have enought point to book {place_required} places. You can only book {club.get('points')}"
         )
         return render_template("booking.html", club=club, competition=competition)
 
     except NotEnoughtPendingPlace:
-        flash(f"There is not enought availaible place for this competition")
+        flash("There is not enought availaible place for this competition")
         return render_template("booking.html", club=club, competition=competition)
 
     placesRequired = int(request.form["places"])
