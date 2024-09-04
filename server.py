@@ -81,11 +81,12 @@ def get_club(email: str) -> dict:
     for club in clubs:
         if email == club.get("email"):
             return club
+
     raise EmailNotFound
 
 
 def valid_booking(place_required: int, club_place: int, pending_place: int):
-    """Check if a booking is valid or raise the Exception"""
+    """Check if a booking is valid or raise the matching Exception"""
 
     if not isinstance(place_required, int) or place_required <= 0:
         raise ValueError
@@ -109,10 +110,10 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 
-@app.route("/test")
-def test():
-    # return jsonify({"files": ['file1', 'file2']})
-    return make_response(json.dumps({"files": ["file1", "file2"]}), 200)
+# @app.route("/test")
+# def test():
+#     # return jsonify({"files": ['file1', 'file2']})
+#     return make_response(json.dumps({"files": ["file1", "file2"]}), 200)
 
 
 @app.route("/")
@@ -122,7 +123,7 @@ def index():
 
 @app.route("/showSummary", methods=["POST"])
 def show_summary():
-    """Render the available competitions"""
+    """Render the available competitions."""
 
     # club = [club for club in clubs if club['email'] == request.form['email']][0]
 

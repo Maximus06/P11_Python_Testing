@@ -59,10 +59,12 @@ lancer http://localhost:8089/
 ***********************************************************************************************************
 Coverage
 
-fichier coveragerc:
+fichier .coveragerc:
 # Pour omettre le dossier des tests dans le coverage
 [run]
-omit = tests/*
+omit = 
+    tests/*
+    locustfile.py
 
 avec coverage :
 coverage run -m pytest -v tests

@@ -27,13 +27,22 @@ def test_club_points_are_correctly_updated():
     WHEN the update_club_point function is called
     THEN the remaining point should be correctly updated
     """
+
+    # AAA
+    # arrange
+    # act
+    # assert
+
+    # arrange
     start_point = 25
     point_to_substract = 12
     expected_remaining_point = 13
 
+    # act
     result = update_club_points(start_point, point_to_substract)
     result_zero = update_club_points(start_point, 50)
 
+    # assert
     assert  result == expected_remaining_point
     assert  result_zero == 0
 
