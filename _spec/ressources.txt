@@ -73,3 +73,7 @@ pytest --cov=.  -v tests
 Ou en générant un rapport html:
 pytest --cov=. --cov-report html (générera un dossier htmlcov)
 
+pytest en parrallèle :
+pip install pytest-xdist
+
+pytest -n 3
