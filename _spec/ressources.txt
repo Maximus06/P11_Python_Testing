@@ -79,3 +79,17 @@ pytest en parrallèle :
 pip install pytest-xdist
 
 pytest -n 3
+
+Pour la maitrise du temps -----------------------------------------
+# https://pypi.org/project/freezegun/
+
+from freezegun import freeze_time
+import datetime
+import unittest
+
+# Freeze time for a pytest style test:
+
+@freeze_time("2012-01-14")
+def test():
+    assert datetime.datetime.now() == datetime.datetime(2012, 1, 14)
+--------------------------------------------------------------------
